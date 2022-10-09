@@ -1,0 +1,11 @@
+{
+    "name": "team-profile-generator",
+    "description": "This program uses the command line to generate an html page with a team profile",
+    "authors": "Graham Johnson",
+    "version": "1.0.0",
+    "main": "index.js",
+    "dependencies": {
+        "inquirer": "9.1.2",
+        "jest": "29.0.3"
+    }
+}

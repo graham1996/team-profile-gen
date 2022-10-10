@@ -9,10 +9,39 @@ const Employee = require('./lib/employee');
 
 let team = [];
 
-const writeFile = data => {
-    fs.writeFile('./dist/index.html', data, err => {
-        if (err) throw err;
-        console.log("Profile successfully created")
+
+function mainMenu() {
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'main',
+            message: "What would you like to do?",
+            choices: [
+                { name: "Add Manager", value: "Manager" },
+                { name: "Add Engineer", value: "Engineer" },
+                { name: "Add Intern", value: "Intern" },
+                { name: "Exit", value: "Exit" }
+            ]
+        }
+    ])
+    .then((answers) => {
+        switch (answers.main) {
+            case "Manager": {
+                createManager();
+                break;
+            }
+            case "Engineer": {
+                createEngineer();
+                break;
+            }
+            case "Intern": {
+                createIntern();
+                break;
+            }
+            case "Exit": {
+                process.exit();
+            }
+        }
     })
 }
 
@@ -22,89 +51,103 @@ const createManager = () => {
         {
             type: 'input',
             name: 'name',
-            message: "Please enter the team manager's name."
+            message: "Please enter the team manager's name"
         },
         {
             type: 'input',
             name: 'id',
-            message: "Please enter the team manager's ID.",
+            message: "Please enter the team manager's ID",
         },
         {
             type: 'input',
             name: 'email',
-            message: "Please enter the team manager's email.",
+            message: "Please enter the team manager's email",
         },
         {
             type: 'number',
             name: 'officeNumber',
-            message: "Please enter the team manager's office number.",
+            message: "Please enter the team manager's office number",
         }
     ])
-        .then(managerInput => {
-            const { name, id, email, officeNumber } = managerInput;
-            let Manager = new Manager(name, id, email, officeNumber);
-
-            team.push(Manager);
-            console.log(Manager);
+        .then((answers) => {
+            let managerInput = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+            team.push(managerInput);
+            generateHTML();
+            mainMenu();
         })
 };
 
-const createEmployee = () => {
+const createEngineer = () => {
     inquirer.prompt([
         {
             type: 'input',
             name: 'name',
-            message: "Please enter employee's name"
+            message: "Please enter engineer's name"
         },
         {
             type: 'input',
             name: 'id',
-            message: "Please enter employee's ID"
+            message: "Please enter engineer's ID"
         },
         {
             type: 'input',
             name: 'email',
-            message: "Please enter employee's email"
-        },
-        {
-            type: 'list',
-            name: 'role',
-            message: "What is this employee's role?",
-            choices: ['Intern', 'Engineer']
+            message: "Please enter engineer's email"
         },
         {
             type: 'input',
             name: 'github',
-            message: "Please enter the engineers's github username"
+            message: "Please enter engineer's Github username",
+        },
+    ])
+
+   .then((answers) => {
+    let engineerInput = new Engineer(answers.name, answers.id, answers.email, answers.github);
+    team.push(engineerInput);
+    generateHTML();
+    mainMenu();
+   })
+};
+
+const createIntern = () => {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: "Please enter intern's name"
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: "Please enter intern's ID"
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "Please enter intern's email"
         },
         {
             type: 'input',
             name: 'school',
-            message: "Please enter the intern's school"
+            message: "Please enter intern's school"
         }
     ])
-
-    .then(newEmployeeData => {
-        let { name, id, email, role, github, school } = newEmployeeData;
-        let employee;
-
-        if (role === 'Intern') {
-            employee = new Intern (name, id, email, school);
-
-        } else if (role === 'Engineer') {
-            employee = new Engineer (name, id, email, github);
-        }
-
-        team.push(employee);
+    .then((answers) => {
+        let internInput = new Intern(answers.name, answers.id, answers.email, answers.school);
+        team.push(internInput);
+        generateHTML();
+        mainMenu();
     })
-};
+}
 
-createManager()
-.then(createEmployee)
-.then(team => {
-return generatePage(team);
-})
-.then(html => {
-    return writeFile(html);
-})
+function generateHTML() {
+    employeeProfile = generatePage(team);
+    fs.writeFile('./dist/index.html', employeeProfile, (err) => {
+        if (err) throw err;
+        console.log("Profile successfully created")
+    })
+}
+
+mainMenu();
+
 

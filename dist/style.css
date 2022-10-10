@@ -1,0 +1,75 @@
+
+:root {
+    --primary: #fefae0;
+    --secondary: #ccd5ae;
+    --tertiary: #e9edc9;
+    --quaternary: #d4a373;
+}
+
+ body {
+    /* imported font */
+    font-family: 'Bebas Neue', cursive;
+    background-color: var(--secondary);
+} 
+
+.container {
+    margin: 100px auto;
+    justify-content: space-evenly;
+    display: flex;
+    
+} 
+
+#navbar-text {
+    font-size: 80px;
+}
+
+#navbar {
+    background-color: var(--quaternary);
+    color: var(--primary);
+    /* imported font */
+    font-family: 'Bebas Neue', cursive;
+}
+
+#name {
+    font-size: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+#role {
+    display: flex;
+    justify-content: center;
+}
+
+.id, 
+.email, 
+.office, 
+.github, 
+.school {
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* google icons */
+.material-icons {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    margin-left: 4px;
+}
+
+.card-header {
+    background-color: var(--quaternary);
+    color: var(--primary);
+}
+
+.card-body {
+    background-color: var(--tertiary);
+    color: var(--quaternary);
+    font-size: large;
+}
+

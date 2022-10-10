@@ -9,7 +9,7 @@ const Employee = require('./lib/employee');
 
 let team = [];
 
-
+// inital menu function
 function mainMenu() {
     inquirer.prompt([
         {
@@ -24,6 +24,7 @@ function mainMenu() {
             ]
         }
     ])
+    // switches for choices
     .then((answers) => {
         switch (answers.main) {
             case "Manager": {
@@ -46,7 +47,7 @@ function mainMenu() {
 }
 
 
-const createManager = () => {
+function createManager() {
     return inquirer.prompt([
         {
             type: 'input',
@@ -77,7 +78,7 @@ const createManager = () => {
         })
 };
 
-const createEngineer = () => {
+function createEngineer() {
     inquirer.prompt([
         {
             type: 'input',
@@ -109,7 +110,7 @@ const createEngineer = () => {
    })
 };
 
-const createIntern = () => {
+function createIntern() {
     inquirer.prompt([
         {
             type: 'input',
